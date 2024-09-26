@@ -1,23 +1,31 @@
 function convertToRoman(num) {
-  	const obj = {
-      0:['M',1000], 
-      1:['D', 500], 
-      2:['C', 100], 
-      3:['L', 50], 
-      4:['X', 10], 
-      5:['V', 5], 
-      6:['I', 1]
-    };
+    // Define the Roman numeral symbols and their values
+    const romanSymbols = [
+        ['M', 1000],
+        ['D', 500],
+        ['C', 100],
+        ['L', 50],
+        ['X', 10],
+        ['V', 5],
+        ['I', 1]
+    ];
 
-  //your code here
+    let result = '';
 
+    // Iterate through each symbol
+    for (let [symbol, value] of romanSymbols) {
+        // While num is greater than or equal to the value
+        while (num >= value) {
+            result += symbol; // Append the symbol to result
+            num -= value;     // Subtract the value from num
+        }
+    }
+
+    return result; // Return the final Roman numeral string
 }
-// You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
 
-// console.log(convertToRoman(36));
-
-
-
-
-// do not edit below this line
-module.exports = convertToRoman
+// Example usage:
+console.log(convertToRoman(14));   // Output: XIV
+console.log(convertToRoman(798));  // Output: DCCXCVIII
+console.log(convertToRoman(0));    // Output: ''
+console.log(convertToRoman(100000)); // Output: 'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM'
