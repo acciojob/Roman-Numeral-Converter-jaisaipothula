@@ -1,31 +1,51 @@
-function convertToRoman(num) {
-    // Define the Roman numeral symbols and their values
-    const romanSymbols = [
-        ['M', 1000],
-        ['D', 500],
-        ['C', 100],
-        ['L', 50],
-        ['X', 10],
-        ['V', 5],
-        ['I', 1]
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+
+const convertToRoman = (num) => {
+    const romanNumerals = [
+        { value: 1000, numeral: 'M' },
+        { value: 900, numeral: 'CM' },
+        { value: 500, numeral: 'D' },
+        { value: 400, numeral: 'CD' },
+        { value: 100, numeral: 'C' },
+        { value: 90, numeral: 'XC' },
+        { value: 50, numeral: 'L' },
+        { value: 40, numeral: 'XL' },
+        { value: 10, numeral: 'X' },
+        { value: 9, numeral: 'IX' },
+        { value: 5, numeral: 'V' },
+        { value: 4, numeral: 'IV' },
+        { value: 1, numeral: 'I' },
     ];
 
     let result = '';
 
-    // Iterate through each symbol
-    for (let [symbol, value] of romanSymbols) {
-        // While num is greater than or equal to the value
+    for (const { value, numeral } of romanNumerals) {
         while (num >= value) {
-            result += symbol; // Append the symbol to result
-            num -= value;     // Subtract the value from num
+            result += numeral;
+            num -= value;
         }
     }
+    
+    return result;
+};
 
-    return result; // Return the final Roman numeral string
-}
+app.post('/romanConverter', (req, res) => {
+    const { input } = req.body;
 
-// Example usage:
-console.log(convertToRoman(14));   // Output: XIV
-console.log(convertToRoman(798));  // Output: DCCXCVIII
-console.log(convertToRoman(0));    // Output: ''
-console.log(convertToRoman(100000)); // Output: 'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+    if (typeof input !== 'number' || input <= 0 || input > 3999) {
+        return res.status(400).json({ error: 'Input must be a number between 1 and 3999' });
+    }
+
+    const roman = convertToRoman(input);
+    res.status(200).json({ roman });
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
