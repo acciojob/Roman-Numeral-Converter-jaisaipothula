@@ -1,5 +1,5 @@
 function convertToRoman(num) {
-    // Define the symbols and their values
+    // Define the Roman numeral symbols and their values
     const romanSymbols = [
         ['M', 1000],
         ['D', 500],
@@ -10,20 +10,22 @@ function convertToRoman(num) {
         ['I', 1]
     ];
 
-    let romanNumeral = '';
+    let result = '';
 
-    // Iterate through the symbols and their values
+    // Iterate through each symbol
     for (let [symbol, value] of romanSymbols) {
-        // While the number is greater than or equal to the value
+        // While num is greater than or equal to the value
         while (num >= value) {
-            romanNumeral += symbol; // Append the symbol to the result
-            num -= value; // Subtract the value from the number
+            result += symbol; // Append the symbol to result
+            num -= value;     // Subtract the value from num
         }
     }
 
-    return romanNumeral; // Return the resulting Roman numeral
+    return result; // Return the final Roman numeral string
 }
 
 // Example usage:
-console.log(convertToRoman(14));  // Output: XIV
-console.log(convertToRoman(798)); // Output: DCCXCVIII
+console.log(convertToRoman(14));   // Output: XIV
+console.log(convertToRoman(798));  // Output: DCCXCVIII
+console.log(convertToRoman(0));    // Output: ''
+console.log(convertToRoman(100000)); // Output: 'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM'
